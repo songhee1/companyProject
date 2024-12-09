@@ -1,13 +1,18 @@
 package org.controller;
 
 import java.io.IOException;
+import org.data.DataItem;
 import org.domain.ShoppingBasket;
+import org.exception.UserException;
 import org.inputSystem.InputBundle;
 import org.outputSystem.OutputBundle;
+import org.service.ProductService;
+import org.validation.ValidateLogic;
 
 public class OrderProgramController {
     private static ShoppingBasket basket = new ShoppingBasket();
-    public static void programStart() throws IOException {
+    private static ProductService productService = new ProductService();
+    public static void programStart() throws IOException, UserException {
         //Input 인스턴스 생성
         // 1. 주문 할건지 종료할건지 물어보고
         // 1-1. 주문이면 상품번호, 주문수량 입력
@@ -25,8 +30,8 @@ public class OrderProgramController {
                     break;
                 }
                 int productAmount = inputBundle.orderProduct();
-
-
+                productService.orderProduct(productId, productAmount);
+                
             }
             CalculateController.calculatePaymentAmount(basket);
             // 영수증 출력
