@@ -10,7 +10,7 @@ import org.service.ProductService;
 import org.validation.ValidateLogic;
 
 public class OrderProgramController {
-    private static ShoppingBasket basket = new ShoppingBasket();
+    private static ShoppingBasket basket;
     private static ProductService productService = new ProductService();
     public static void programStart() throws IOException, UserException {
         //Input 인스턴스 생성
@@ -21,8 +21,10 @@ public class OrderProgramController {
         // 2.종료하면 감사합니다 출력
         InputBundle inputBundle = new InputBundle();
         OutputBundle outputBundle = new OutputBundle();
+        boolean isReset = false;
         while(inputBundle.orderOrQuit() == 1){
             outputBundle.printProductList();
+            basket = new ShoppingBasket();
             for(;;){
                 outputBundle.printToOrderProduct();
                 int productId = inputBundle.orderProduct();
@@ -31,8 +33,18 @@ public class OrderProgramController {
                 }
                 outputBundle.printToOrderProductAmount();
                 int productAmount = inputBundle.orderProduct();
-                productService.orderProduct(productId, productAmount);
-                productService.addProductToBasket(productId, productAmount, basket);
+                try{
+                    productService.orderProduct(productId, productAmount);
+                    productService.addProductToBasket(productId, productAmount, basket);
+                }catch(UserException exception){
+                    System.out.println(exception.getMessage());
+                    isReset = true;
+                    break;
+                }
+            }
+            if(isReset){
+                isReset = false;
+                continue;
             }
             CalculateController.calculatePaymentAmount(basket);
             // 영수증 출력

@@ -31,9 +31,12 @@ public class OutputBundle {
         for (OrderProductDTO product : list) {
             sb.append(product.getProductName()).append(SHORT_DASHI).append(product.getOrderAmount()).append(UNIT_COUNT);
         }
-        sb.append(LONG_DASHI).append("주문금액: ").append(basket.getOrderPrice()).append(UNIT_CURRENCY_KOREAN)
-            .append("배송비: ").append(basket.getDeliveryFee()).append(UNIT_CURRENCY_KOREAN).append(LONG_DASHI)
-            .append("지불금액: ").append(basket.getPaymentAmount()).append(UNIT_CURRENCY_KOREAN).append(LONG_DASHI);
+        sb.append(LONG_DASHI).append("주문금액: ").append(String.format("%,d", basket.getOrderPrice())).append(UNIT_CURRENCY_KOREAN);
+        int deliveryFee = basket.getDeliveryFee();
+        if(deliveryFee > 0){
+            sb.append("배송비: ").append(String.format("%,d", basket.getDeliveryFee())).append(UNIT_CURRENCY_KOREAN);
+        }
+        sb.append(LONG_DASHI).append("지불금액: ").append(String.format("%,d", basket.getPaymentAmount())).append(UNIT_CURRENCY_KOREAN).append(LONG_DASHI);
         System.out.println(sb);
     }
 

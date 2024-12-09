@@ -11,11 +11,7 @@ public class ProductService {
 
     public void orderProduct(int productId, int productAmount) throws UserException {
         ValidateLogic.validateOrderAmount(productId, productAmount);
-        int stockAmount = DataItem.getMap().get(productId).reduceStockAmount(productAmount);
-        if(stockAmount == 0){
-            DataItem.getMap().remove(productId);
-        }
-
+        DataItem.getMap().get(productId).reduceStockAmount(productAmount);
     }
     public void addProductToBasket(int productId, int productAmount, ShoppingBasket basket){
         Product product = DataItem.getMap().get(productId);
