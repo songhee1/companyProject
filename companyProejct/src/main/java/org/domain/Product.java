@@ -22,8 +22,7 @@ public class Product {
         return stockAmount;
     }
 
-    public Product(int id, String name, int price, int stockAmount) {
-        this.id = id;
+    public Product(String name, int price, int stockAmount) {
         this.name = name;
         this.price = price;
         this.stockAmount = stockAmount;

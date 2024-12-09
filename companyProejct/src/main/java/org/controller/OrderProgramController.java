@@ -1,10 +1,12 @@
 package org.controller;
 
 import java.io.IOException;
+import org.domain.ShoppingBasket;
 import org.inputSystem.InputBundle;
 import org.outputSystem.OutputBundle;
 
 public class OrderProgramController {
+    private static ShoppingBasket basket = new ShoppingBasket();
     public static void programStart() throws IOException {
         //Input 인스턴스 생성
         // 1. 주문 할건지 종료할건지 물어보고
@@ -15,6 +17,7 @@ public class OrderProgramController {
         InputBundle inputBundle = new InputBundle();
         OutputBundle outputBundle = new OutputBundle();
         while(inputBundle.orderOrQuit() == 1){
+            outputBundle.printProductList();
             for(;;){
                 outputBundle.printToOrderProduct();
                 int productId = inputBundle.orderProduct();
@@ -23,10 +26,16 @@ public class OrderProgramController {
                 }
                 int productAmount = inputBundle.orderProduct();
 
+
             }
+            CalculateController.calculatePaymentAmount(basket);
             // 영수증 출력
-    
+            outputBundle.printReceipt();
         }
         outputBundle.printEnd();
+    }
+
+    public void orderProduct(int productId, int orderAmount){
+
     }
 }

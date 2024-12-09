@@ -2,16 +2,16 @@ package org.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.dto.OrderProductDTO;
 
 public class ShoppingBasket {
-    private List<Product> list = new ArrayList<>();
+    private List<OrderProductDTO> list = new ArrayList<>();
     private int orderPrice;
-//    private int deliveryCharge;
-//    private int paymentAmount;
-//    private final int MINIMUM_AMOUNT = 50000;
-//    private final int DELIVERY_FEE = 2500;
+    private int deliveryFee;
+    private int paymentAmount;
 
-    public List<Product> getList() {
+
+    public List<OrderProductDTO> getList() {
         return list;
     }
 
@@ -19,9 +19,24 @@ public class ShoppingBasket {
         return orderPrice;
     }
 
-    public void addProduct(Product product) {
-        this.list.add(product);
-        orderPrice += product.getPrice();
+    public void setDeliveryFee(int deliveryFee) {
+        this.deliveryFee = deliveryFee;
     }
 
+    public int getDeliveryFee() {
+        return deliveryFee;
+    }
+
+    public void addProduct(OrderProductDTO orderProductDTO) {
+        this.list.add(orderProductDTO);
+        orderPrice += orderProductDTO.getProductPrice();
+    }
+
+    public void setPaymentAmount(int paymentAmount) {
+        this.paymentAmount = paymentAmount;
+    }
+
+    public int getPaymentAmount() {
+        return paymentAmount;
+    }
 }
