@@ -29,18 +29,15 @@ public class OrderProgramController {
                 if(productId == 0){
                     break;
                 }
+                outputBundle.printToOrderProductAmount();
                 int productAmount = inputBundle.orderProduct();
                 productService.orderProduct(productId, productAmount);
-                
+                productService.addProductToBasket(productId, productAmount, basket);
             }
             CalculateController.calculatePaymentAmount(basket);
             // 영수증 출력
-            outputBundle.printReceipt();
+            outputBundle.printReceipt(basket);
         }
         outputBundle.printEnd();
-    }
-
-    public void orderProduct(int productId, int orderAmount){
-
     }
 }

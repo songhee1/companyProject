@@ -9,10 +9,11 @@ import org.domain.ShoppingBasket;
 import org.dto.OrderProductDTO;
 
 public class OutputBundle {
-    private final String LONG_DASHI = "----------------------------------";
-    private final String SHORT_DASHI = "-";
-    private final String UNIT_COUNT = "개";
-    private final String UNIT_CURRENCY_KOREAN = "원";
+    private final String LONG_DASHI = "----------------------------------\n";
+    private final String SHORT_DASHI = " - ";
+    private final String UNIT_COUNT = "개\n";
+    private final String UNIT_CURRENCY_KOREAN = "원\n";
+
     public void printEnd(){
         System.out.println("고객님의 주문 감사합니다.");
     }
@@ -23,17 +24,16 @@ public class OutputBundle {
         System.out.print("수량 : ");
     }
 
-    public void printReceipt() {
+    public void printReceipt(ShoppingBasket basket) {
         StringBuilder sb = new StringBuilder();
-        sb.append("주문 내역:\n").append(LONG_DASHI).append("\n");
-        ShoppingBasket basket = new ShoppingBasket();
+        sb.append("주문 내역:\n").append(LONG_DASHI);
         List<OrderProductDTO> list = basket.getList();
         for (OrderProductDTO product : list) {
             sb.append(product.getProductName()).append(SHORT_DASHI).append(product.getOrderAmount()).append(UNIT_COUNT);
         }
         sb.append(LONG_DASHI).append("주문금액: ").append(basket.getOrderPrice()).append(UNIT_CURRENCY_KOREAN)
             .append("배송비: ").append(basket.getDeliveryFee()).append(UNIT_CURRENCY_KOREAN).append(LONG_DASHI)
-            .append("지불금액: ").append(basket.getPaymentAmount()).append(LONG_DASHI).append("\n");
+            .append("지불금액: ").append(basket.getPaymentAmount()).append(UNIT_CURRENCY_KOREAN).append(LONG_DASHI);
         System.out.println(sb);
     }
 

@@ -1,11 +1,11 @@
 package org.dto;
 
 public class OrderProductDTO {
-    private int productName;
+    private String productName;
     private int orderAmount;
     private int productPrice;
 
-    public int getProductName() {
+    public String getProductName() {
         return productName;
     }
 
@@ -17,7 +17,7 @@ public class OrderProductDTO {
         return productPrice;
     }
 
-    public OrderProductDTO(int productName, int orderAmount, int productPrice) {
+    public OrderProductDTO(String productName, int orderAmount, int productPrice) {
         this.productName = productName;
         this.orderAmount = orderAmount;
         this.productPrice = productPrice;

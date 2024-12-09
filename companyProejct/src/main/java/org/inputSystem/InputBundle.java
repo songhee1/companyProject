@@ -6,7 +6,9 @@ import java.io.InputStreamReader;
 
 public class InputBundle {
     private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private final String inputOrder = "입력(o[order]: 주문, q[quit]: 종료) : ";
     public int orderOrQuit() throws IOException {
+        System.out.print(inputOrder);
         String userInput = br.readLine();
         if(userInput.equals("o")) return 1;
         else return 0;
