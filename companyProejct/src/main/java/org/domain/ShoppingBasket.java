@@ -2,6 +2,7 @@ package org.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import org.dto.OrderProductDTO;
 
 public class ShoppingBasket {
@@ -9,7 +10,6 @@ public class ShoppingBasket {
     private int orderPrice;
     private int deliveryFee;
     private int paymentAmount;
-
 
     public List<OrderProductDTO> getList() {
         return list;

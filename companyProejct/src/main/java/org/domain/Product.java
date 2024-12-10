@@ -27,11 +27,10 @@ public class Product {
         this.price = price;
         this.stockAmount = stockAmount;
     }
-    public int reduceStockAmount(int count){
+    public void reduceStockAmount(int count){
         stockAmount -= count;
         if(stockAmount <0){
             stockAmount = 0;
         }
-        return this.stockAmount;
     }
 }
