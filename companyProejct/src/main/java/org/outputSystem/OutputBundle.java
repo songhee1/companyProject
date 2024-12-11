@@ -15,28 +15,28 @@ public class OutputBundle {
     private final String SHORT_DASHI = " - ";
 
     public void printEnd(){
-        System.out.println(OrderEnum.ORDER_END);
+        System.out.println(OrderEnum.ORDER_END.getOrderData());
     }
     public void printToOrderProduct(){
-        System.out.print(OrderEnum.ORDER_NUMBER_OF_PRODUCT);
+        System.out.print(OrderEnum.ORDER_NUMBER_OF_PRODUCT.getOrderData());
     }
     public void printToOrderProductAmount(){
-        System.out.print(UnitEnum.UNIT_COUNT_OF_TO_BUY);
+        System.out.print(UnitEnum.UNIT_COUNT_OF_TO_BUY.getUnitData());
     }
 
     public void printReceipt(ShoppingBasket basket) {
         StringBuilder sb = new StringBuilder();
-        sb.append(OrderEnum.ORDER_HISTORY_OF_ORDER).append(LONG_DASHI);
+        sb.append(OrderEnum.ORDER_HISTORY_OF_ORDER.getOrderData()).append(LONG_DASHI);
         List<OrderProductDTO> list = basket.getList();
         for (OrderProductDTO product : list) {
-            sb.append(product.getProductName()).append(SHORT_DASHI).append(product.getOrderAmount()).append(UnitEnum.UNIT_COUNT);
+            sb.append(product.getProductName()).append(SHORT_DASHI).append(product.getOrderAmount()).append(UnitEnum.UNIT_COUNT.getUnitData());
         }
-        sb.append(LONG_DASHI).append(OrderEnum.ORDER_PRICE_OR_ORDER).append(String.format(UnitEnum.UNIT_COUNT_OF_THOUSAND.toString(), basket.getOrderPrice())).append(UnitEnum.UNIT_CURRENCY_KOREAN);
+        sb.append(LONG_DASHI).append(OrderEnum.ORDER_PRICE_OR_ORDER.getOrderData()).append(String.format(UnitEnum.UNIT_COUNT_OF_THOUSAND.getUnitData(), basket.getOrderPrice())).append(UnitEnum.UNIT_CURRENCY_KOREAN.getUnitData());
         int deliveryFee = basket.getDeliveryFee();
         if(deliveryFee > 0){
-            sb.append(OrderEnum.ORDER_DELIVERY_FEE).append(String.format(UnitEnum.UNIT_COUNT_OF_THOUSAND.toString(), basket.getDeliveryFee())).append(UnitEnum.UNIT_CURRENCY_KOREAN);
+            sb.append(OrderEnum.ORDER_DELIVERY_FEE.getOrderData()).append(String.format(UnitEnum.UNIT_COUNT_OF_THOUSAND.getUnitData(), basket.getDeliveryFee())).append(UnitEnum.UNIT_CURRENCY_KOREAN.getUnitData());
         }
-        sb.append(LONG_DASHI).append(OrderEnum.ORDER_PAYMENT_OF_AMOUNT).append(String.format(UnitEnum.UNIT_COUNT_OF_THOUSAND.toString(), basket.getPaymentAmount())).append(UnitEnum.UNIT_CURRENCY_KOREAN).append(LONG_DASHI);
+        sb.append(LONG_DASHI).append(OrderEnum.ORDER_PAYMENT_OF_AMOUNT.getOrderData()).append(String.format(UnitEnum.UNIT_COUNT_OF_THOUSAND.getUnitData(), basket.getPaymentAmount())).append(UnitEnum.UNIT_CURRENCY_KOREAN.getUnitData()).append(LONG_DASHI);
         System.out.println(sb);
     }
 

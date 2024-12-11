@@ -8,7 +8,7 @@ import org.outputSystem.OutputBundle;
 import org.service.ProductService;
 
 public class OrderProgramController {
-    private static ProductService productService = new ProductService();
+    private static final ProductService productService = ProductService.getProductService();
     public static void programStart() throws IOException, UserException {
         InputBundle inputBundle = new InputBundle();
         OutputBundle outputBundle = new OutputBundle();

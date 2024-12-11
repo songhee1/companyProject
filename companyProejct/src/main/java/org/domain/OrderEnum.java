@@ -13,4 +13,8 @@ public enum OrderEnum {
     OrderEnum(String orderData){
         this.orderData = orderData;
     }
+
+    public String getOrderData() {
+        return orderData;
+    }
 }

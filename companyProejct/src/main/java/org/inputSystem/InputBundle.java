@@ -8,9 +8,9 @@ import org.domain.OrderEnum;
 public class InputBundle {
     private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     public int orderOrQuit() throws IOException {
-        System.out.print(OrderEnum.ORDER_START);
+        System.out.print(OrderEnum.ORDER_START.getOrderData());
         String userInput = br.readLine();
-        if(userInput.equals(OrderEnum.ORDER.toString())) return 1;
+        if(userInput.equals(OrderEnum.ORDER.getOrderData())) return 1;
         else return 0;
     }
     public int orderProduct() throws IOException {

@@ -1,8 +1,6 @@
 package org.controller;
 
-import java.util.List;
 import org.domain.ShoppingBasket;
-import org.dto.OrderProductDTO;
 
 public class CalculateController {
     private static final int MINIMUM_ORDER_PRICE = 50000;

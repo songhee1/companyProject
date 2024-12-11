@@ -10,4 +10,8 @@ public enum UnitEnum {
     UnitEnum(String unitData){
         this.unitData = unitData;
     }
+
+    public String getUnitData() {
+        return unitData;
+    }
 }
