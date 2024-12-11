@@ -1,9 +1,12 @@
 package org.service;
 
+import java.util.Map;
+import org.domain.Product;
 import org.domain.ShoppingBasket;
 import org.exception.UserException;
 
 public interface ProductService {
-    void orderProduct(int productId, int productAmount) throws UserException;
-    void addProductToBasket(int productId, int productAmount, ShoppingBasket basket);
+    public void orderProduct(int productId, int productAmount) throws UserException;
+    public void addProductToBasket(int productId, int productAmount, ShoppingBasket basket);
+    public Map<Integer, Product> getAllProductEntries();
 }

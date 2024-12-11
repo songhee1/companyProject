@@ -1,6 +1,7 @@
 package org.controller;
 
 import java.io.IOException;
+import org.domain.OrderEnum;
 import org.domain.ShoppingBasket;
 import org.exception.UserException;
 import org.inputSystem.InputBundle;
@@ -10,12 +11,17 @@ import org.service.ProductServiceImpl;
 
 public class OrderProgramController {
     private final InputBundle inputBundle = new InputBundle();
-    private final OutputBundle outputBundle = new OutputBundle();
+    private final OutputBundle outputBundle = OutputBundle.getOutputBundle();
     private final ProductService productService = new ProductServiceImpl();
-    public void programStart() throws IOException, UserException {
+
+    public void programStartNew() throws IOException {
+
+    }
+
+    public void programStart() throws IOException {
         boolean isReset = false;
-        while(inputBundle.orderOrQuit() == 1){
-            outputBundle.printProductList();
+        while(inputBundle.orderOrQuitCommand().equals(OrderEnum.ORDER.getOrderData())){
+            outputBundle.printProductList(productService);
             ShoppingBasket basket = new ShoppingBasket();
             isReset = shoppingResetController(isReset, basket);
             if(isReset){

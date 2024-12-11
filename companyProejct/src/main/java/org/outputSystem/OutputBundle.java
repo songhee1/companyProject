@@ -2,17 +2,26 @@ package org.outputSystem;
 
 import java.util.List;
 import java.util.Map;
-import org.controller.CalculateController;
-import org.data.DataItem;
+import java.util.Objects;
 import org.domain.OrderEnum;
 import org.domain.Product;
 import org.domain.ShoppingBasket;
 import org.domain.UnitEnum;
 import org.dto.OrderProductDTO;
+import org.service.ProductService;
 
 public class OutputBundle {
-    private final String LONG_DASHI = "----------------------------------\n";
-    private final String SHORT_DASHI = " - ";
+    private static OutputBundle outputBundle;
+    private OutputBundle(){}
+    public static OutputBundle getOutputBundle(){
+        if(Objects.isNull(outputBundle)){
+            outputBundle = new OutputBundle();
+        }
+
+        return outputBundle;
+    }
+    private static final String LONG_DASHI = "----------------------------------\n";
+    private static final String SHORT_DASHI = " - ";
 
     public void printEnd(){
         System.out.println(OrderEnum.ORDER_END.getOrderData());
@@ -40,8 +49,8 @@ public class OutputBundle {
         System.out.println(sb);
     }
 
-    public void printProductList() {
-        Map<Integer, Product> productMap = DataItem.getMap();
+    public void printProductList(ProductService productService) {
+        Map<Integer, Product> productMap = productService.getAllProductEntries();
         StringBuilder sb = new StringBuilder();
         sb.append("상품번호\t\t\t상품명\t\t\t판매가격\t\t\t재고수\n");
 

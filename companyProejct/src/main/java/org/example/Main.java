@@ -6,7 +6,7 @@ import org.data.DataItem;
 import org.exception.UserException;
 
 public class Main {
-    public static void main(String[] args) throws IOException, UserException {
+    public static void main(String[] args) throws IOException{
         DataItem.setData();
         OrderProgramController orderProgramController = new OrderProgramController();
         orderProgramController.programStart();

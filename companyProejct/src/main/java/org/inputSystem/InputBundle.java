@@ -7,23 +7,12 @@ import jdk.internal.util.xml.impl.Input;
 import org.domain.OrderEnum;
 
 public class InputBundle {
-    private InputBundle inputBundle;
     public InputBundle(){}
 
-    public InputBundle getInputBundle() {
-        return inputBundle;
-    }
-
-    public void setInputBundle(InputBundle inputBundle) {
-        this.inputBundle = inputBundle;
-    }
-
     private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    public int orderOrQuit() throws IOException {
+    public String orderOrQuitCommand() throws IOException {
         System.out.print(OrderEnum.ORDER_START.getOrderData());
-        String userInput = br.readLine();
-        if(userInput.equals(OrderEnum.ORDER.getOrderData())) return 1;
-        else return 0;
+        return br.readLine();
     }
     public int orderProduct() throws IOException {
         String userInputProductId = br.readLine();
