@@ -27,6 +27,11 @@ public class ProductServiceImpl implements ProductService{
     public Map<Integer, Product> getAllProductEntries() {
         return productDAO.getAllProductEntries();
     }
+
+    @Override
+    public boolean hasProductId(Integer productId) {
+        return productDAO.hasProductId(productId);
+    }
 }
 
 

@@ -15,4 +15,9 @@ public class ProductDAOImpl implements ProductDAO{
     public Map<Integer, Product> getAllProductEntries() {
         return DataItem.getMap();
     }
+
+    @Override
+    public boolean hasProductId(Integer productId) {
+        return DataItem.getMap().containsKey(productId);
+    }
 }

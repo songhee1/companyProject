@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import jdk.internal.util.xml.impl.Input;
 import org.domain.OrderEnum;
 import org.exception.UserException;
+import org.repository.ProductDAO;
+import org.service.ProductService;
 import org.validation.ValidateLogic;
 
 public class InputBundle {
@@ -27,12 +29,35 @@ public class InputBundle {
 
         return userInputOrderOrQuitCommand;
     }
-    public int orderProduct() throws IOException {
-        String userInputProductId = br.readLine();
-        if(userInputProductId.isEmpty()){
-            return 0;
-        }else{
-            return Integer.parseInt(userInputProductId);
+    public int orderWithProductId(ProductService productService) throws IOException {
+        String userInputProductId = null;
+        while(true){
+            userInputProductId = br.readLine();
+            if(userInputProductId.isEmpty()) {
+                return 0;
+            }
+            try{
+                ValidateLogic.validateIsNumber(userInputProductId);
+                ValidateLogic.validateProductId(userInputProductId, productService);
+                break;
+            }catch(UserException exception){
+                System.out.println(exception.getMessage());
+            }
         }
+        return Integer.parseInt(userInputProductId);
+
+    }
+    public int orderWithProductAmount() throws IOException {
+        String userInputProductAmount = null;
+        while (true) {
+            userInputProductAmount = br.readLine();
+            try {
+                ValidateLogic.validateIsNumber(userInputProductAmount);
+                break;
+            } catch (UserException exception) {
+                System.out.println(exception.getMessage());
+            }
+        }
+        return Integer.parseInt(userInputProductAmount);
     }
 }

@@ -9,4 +9,5 @@ public interface ProductService {
     public void orderProduct(int productId, int productAmount) throws UserException;
     public void addProductToBasket(int productId, int productAmount, ShoppingBasket basket);
     public Map<Integer, Product> getAllProductEntries();
+    public boolean hasProductId(Integer productId);
 }

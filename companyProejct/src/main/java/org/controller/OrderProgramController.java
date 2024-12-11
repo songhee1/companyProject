@@ -32,13 +32,11 @@ public class OrderProgramController {
 
     private boolean shoppingResetController(boolean isReset, ShoppingBasket basket) throws IOException {
         for(;;){
-            outputBundle.printToOrderProduct();
-            int productId = inputBundle.orderProduct();
+            int productId = orderWithProductId();
             if(productId == 0){
                 break;
             }
-            outputBundle.printToOrderProductAmount();
-            int productAmount = inputBundle.orderProduct();
+            int productAmount = orderWithProductAmount();
             try{
                 productService.orderProduct(productId, productAmount);
                 productService.addProductToBasket(productId, productAmount, basket);
@@ -49,5 +47,14 @@ public class OrderProgramController {
             }
         }
         return isReset;
+    }
+
+    private int orderWithProductId() throws IOException {
+        outputBundle.printToOrderProduct();
+        return inputBundle.orderWithProductId(productService);
+    }
+    private int orderWithProductAmount() throws IOException {
+        outputBundle.printToOrderProductAmount();
+        return inputBundle.orderWithProductAmount();
     }
 }

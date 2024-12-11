@@ -6,4 +6,5 @@ import org.domain.Product;
 public interface ProductDAO {
     public Product getProduct(int productId);
     public Map<Integer, Product> getAllProductEntries();
+    public boolean hasProductId(Integer productId);
 }
