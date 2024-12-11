@@ -14,10 +14,6 @@ public class OrderProgramController {
     private final OutputBundle outputBundle = OutputBundle.getOutputBundle();
     private final ProductService productService = new ProductServiceImpl();
 
-    public void programStartNew() throws IOException {
-
-    }
-
     public void programStart() throws IOException {
         boolean isReset = false;
         while(inputBundle.orderOrQuitCommand().equals(OrderEnum.ORDER.getOrderData())){
