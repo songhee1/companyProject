@@ -1,10 +1,9 @@
 package org.controller;
 
+import org.domain.DigitEnum;
 import org.domain.ShoppingBasket;
 
 public class CalculateController {
-    private static final int MINIMUM_ORDER_PRICE = 50000;
-    private static final int DELIVERY_FEE = 2500;
     public static void calculatePaymentAmount(ShoppingBasket basket){
         int orderPrice = basket.getOrderPrice();
         int deliveryFee = calculateDeliveryFee(orderPrice);
@@ -13,10 +12,15 @@ public class CalculateController {
     }
 
     private static int calculateDeliveryFee(int orderPrice) {
-        if(orderPrice >=MINIMUM_ORDER_PRICE){
+        if(orderPrice >= DigitEnum.DIGIT_MINIMUM_ORDER_PRICE.getNum()){
             return 0;
         }else{
-            return DELIVERY_FEE;
+            return DigitEnum.DIGIT_DELIVERY_FEE.getNum();
         }
     }
+
+    public CalculateController() {
+    }
+
+
 }

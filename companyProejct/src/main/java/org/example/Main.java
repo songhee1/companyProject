@@ -8,6 +8,7 @@ import org.exception.UserException;
 public class Main {
     public static void main(String[] args) throws IOException, UserException {
         DataItem.setData();
-        OrderProgramController.programStart();
+        OrderProgramController orderProgramController = new OrderProgramController();
+        orderProgramController.programStart();
     }
 }

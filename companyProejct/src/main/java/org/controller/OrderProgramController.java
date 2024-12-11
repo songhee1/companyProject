@@ -6,17 +6,18 @@ import org.exception.UserException;
 import org.inputSystem.InputBundle;
 import org.outputSystem.OutputBundle;
 import org.service.ProductService;
+import org.service.ProductServiceImpl;
 
 public class OrderProgramController {
-    private static final ProductService productService = ProductService.getProductService();
-    public static void programStart() throws IOException, UserException {
-        InputBundle inputBundle = new InputBundle();
-        OutputBundle outputBundle = new OutputBundle();
+    private final InputBundle inputBundle = new InputBundle();
+    private final OutputBundle outputBundle = new OutputBundle();
+    private final ProductService productService = new ProductServiceImpl();
+    public void programStart() throws IOException, UserException {
         boolean isReset = false;
         while(inputBundle.orderOrQuit() == 1){
             outputBundle.printProductList();
             ShoppingBasket basket = new ShoppingBasket();
-            isReset = shoppingResetController(outputBundle, inputBundle, isReset, basket);
+            isReset = shoppingResetController(isReset, basket);
             if(isReset){
                 isReset = false;
                 continue;
@@ -27,8 +28,7 @@ public class OrderProgramController {
         outputBundle.printEnd();
     }
 
-    private static boolean shoppingResetController(OutputBundle outputBundle, InputBundle inputBundle,
-        boolean isReset, ShoppingBasket basket) throws IOException {
+    private boolean shoppingResetController(boolean isReset, ShoppingBasket basket) throws IOException {
         for(;;){
             outputBundle.printToOrderProduct();
             int productId = inputBundle.orderProduct();
