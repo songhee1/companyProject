@@ -8,16 +8,16 @@ import org.domain.Product;
 public class ProductDAOImpl implements ProductDAO{
     @Override
     public Product getProduct(int productId) {
-        return DataItem.getMap().get(productId);
+        return DataItem.getDataItems().get(productId);
     }
 
     @Override
     public Map<Integer, Product> getAllProductEntries() {
-        return DataItem.getMap();
+        return DataItem.getDataItems();
     }
 
     @Override
     public boolean hasProductId(Integer productId) {
-        return DataItem.getMap().containsKey(productId);
+        return DataItem.getDataItems().containsKey(productId);
     }
 }

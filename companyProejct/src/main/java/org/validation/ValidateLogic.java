@@ -14,8 +14,9 @@ public class ValidateLogic {
     private static final String EXCEPTION_USE_NUMBER = "숫자를 입력해야합니다.";
     private static final String EXCEPTION_NOT_EXIST_PRODUCT_ID = "해당 상품번호는 존재하지 않습니다.";
 
+
     public static void validateOrderAmount(int productId, int orderAmount) throws UserException {
-        Product product = DataItem.getMap().get(productId);
+        Product product = DataItem.getDataItems().get(productId);
         if(product.getStockAmount()<orderAmount){
             throw new UserException(EXCEPTION_ORDER_AMOUNT_IS_BIGGER_THAN_STOCK_AMOUNT);
         }
