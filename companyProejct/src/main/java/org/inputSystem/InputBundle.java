@@ -12,9 +12,10 @@ import org.validation.ValidateLogic;
 
 public class InputBundle {
     public InputBundle(){}
-
+    //Scanner가 더 좋다!
     private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     public String orderOrQuitCommand() throws IOException {
+        //넘어가기
         String userInputOrderOrQuitCommand = null;
         while(true){
             System.out.print(OrderEnum.ORDER_START.getOrderData());
