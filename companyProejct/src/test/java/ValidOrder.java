@@ -6,7 +6,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.data.DataItem;
+import org.data.Data;
 import org.exception.UserException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ public class ValidOrder {
         int orderProductId = 782858;
         int requestAmount = 2;
 
-        DataItem.setData();
+        Data.getItems();
 
         CountDownLatch doneSignal = new CountDownLatch(numThreads);
         ExecutorService executorService = Executors.newFixedThreadPool(numThreads);
@@ -37,7 +37,7 @@ public class ValidOrder {
                 try{
                     productService.orderProduct(orderProductId, requestAmount);
                     successCount.getAndIncrement();
-                }catch(UserException exception){
+                }catch(UserException | IOException exception){
                     failCount.getAndIncrement();
                 }finally {
                     doneSignal.countDown();

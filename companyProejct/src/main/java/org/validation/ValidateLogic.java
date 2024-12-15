@@ -1,10 +1,10 @@
 package org.validation;
 
-import org.data.DataItem;
+import java.io.IOException;
+import org.data.Data;
 import org.domain.Product;
 import org.exception.UserException;
 import org.repository.ProductDAO;
-import org.repository.ProductDAOImpl;
 import org.service.ProductService;
 
 public class ValidateLogic {
@@ -15,9 +15,10 @@ public class ValidateLogic {
     private static final String EXCEPTION_NOT_EXIST_PRODUCT_ID = "해당 상품번호는 존재하지 않습니다.";
 
 
-    public static void validateOrderAmount(int productId, int orderAmount) throws UserException {
-        Product product = DataItem.getDataItems().get(productId);
-        if(product.getStockAmount()<orderAmount){
+    public static void validateOrderAmount(int productId, int orderAmount, ProductDAO productDAO)
+        throws UserException, IOException {
+        int stockAmount = productDAO.getProduct(productId).getStockAmount();
+        if(stockAmount < orderAmount){
             throw new UserException(EXCEPTION_ORDER_AMOUNT_IS_BIGGER_THAN_STOCK_AMOUNT);
         }
     }
@@ -42,7 +43,7 @@ public class ValidateLogic {
         }
     }
     public static void validateProductId(String inputProductId, ProductService productService)
-        throws UserException {
+        throws UserException, IOException {
         boolean hasProductId = productService.hasProductId(Integer.parseInt(inputProductId));
         if(!hasProductId){
             throw new UserException(EXCEPTION_NOT_EXIST_PRODUCT_ID);

@@ -1,5 +1,7 @@
 package org.outputSystem;
 
+import com.google.common.collect.ImmutableMap;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -49,12 +51,12 @@ public class OutputBundle {
         System.out.println(sb);
     }
 
-    public void printProductList(ProductService productService) {
-        Map<Integer, Product> productMap = productService.getAllProductEntries();
+    public void printProductList(ProductService productService) throws IOException {
+        ImmutableMap<Integer, Product> items = productService.getAllProductEntries();
         StringBuilder sb = new StringBuilder();
         sb.append("상품번호\t\t\t상품명\t\t\t판매가격\t\t\t재고수\n");
 
-        for (Map.Entry<Integer, Product> entry : productMap.entrySet()) {
+        for (Map.Entry<Integer, Product> entry : items.entrySet()) {
             Product product = entry.getValue();
             sb.append(entry.getKey()).append("\t").append(product.getName()).append("\t")
                 .append(product.getPrice()).append("\t").append(product.getStockAmount()).append("\n");

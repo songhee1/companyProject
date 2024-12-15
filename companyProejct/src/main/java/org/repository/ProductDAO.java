@@ -1,10 +1,13 @@
 package org.repository;
 
+import com.google.common.collect.ImmutableMap;
+import java.io.IOException;
 import java.util.Map;
 import org.domain.Product;
 
 public interface ProductDAO {
-    public Product getProduct(int productId);
-    public Map<Integer, Product> getAllProductEntries();
-    public boolean hasProductId(Integer productId);
+    public Product getProduct(int productId) throws IOException;
+    public ImmutableMap<Integer, Product> getAllProductEntries() throws IOException;
+    public boolean hasProductId(Integer productId) throws IOException;
+
 }
