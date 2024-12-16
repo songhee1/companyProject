@@ -1,4 +1,4 @@
-package org.controller;
+package org.program;
 
 import java.io.IOException;
 import org.domain.OrderEnum;
@@ -9,9 +9,7 @@ import org.outputSystem.OutputBundle;
 import org.service.ProductService;
 import org.service.ProductServiceImpl;
 
-public class OrderProgramController { //우리가 아는 컨트롤러랑 다르다
-    //mvc 패턴->mc정도만 서버에서 담당 mvvc 개념만 알것!
-    //이름이 어색하다
+public class OrderProgram {
     private final InputBundle inputBundle = new InputBundle();
     private final OutputBundle outputBundle = OutputBundle.getOutputBundle();
     private final ProductService productService = new ProductServiceImpl();
@@ -29,7 +27,7 @@ public class OrderProgramController { //우리가 아는 컨트롤러랑 다르�
                 isReset = false;
                 continue;
             }
-            CalculateController.calculatePaymentAmount(basket);
+            CalculateProgram.calculatePaymentAmount(basket);
             outputBundle.printReceipt(basket);
         }
         outputBundle.printEnd();

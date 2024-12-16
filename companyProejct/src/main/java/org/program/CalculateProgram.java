@@ -1,9 +1,9 @@
-package org.controller;
+package org.program;
 
 import org.domain.DigitEnum;
 import org.domain.ShoppingBasket;
 
-public class CalculateController {
+public class CalculateProgram {
     public static void calculatePaymentAmount(ShoppingBasket basket){
         int orderPrice = basket.getOrderPrice();
         int deliveryFee = calculateDeliveryFee(orderPrice);
@@ -19,7 +19,7 @@ public class CalculateController {
         }
     }
 
-    public CalculateController() {
+    public CalculateProgram() {
     }
 
 

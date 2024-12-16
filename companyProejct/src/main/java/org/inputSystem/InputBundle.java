@@ -3,10 +3,8 @@ package org.inputSystem;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import jdk.internal.util.xml.impl.Input;
 import org.domain.OrderEnum;
 import org.exception.UserException;
-import org.repository.ProductDAO;
 import org.service.ProductService;
 import org.validation.ValidateLogic;
 
