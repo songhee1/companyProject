@@ -1,7 +1,5 @@
 package org.domain;
 
-import com.google.common.collect.ImmutableMap.Builder;
-
 public class Product {
     private String name;
     private int price;

@@ -8,8 +8,6 @@ import org.service.ProductService;
 import org.service.ProductServiceImpl;
 
 public class OrderContext {
-    private final OutputBundle outputBundle = OutputBundle.getOutputBundle();
-    private final ProductService productService = new ProductServiceImpl();
     private State state;
     private String command;
     private ShoppingBasket basket;
@@ -36,6 +34,6 @@ public class OrderContext {
     }
 
     public void handleEvent(OrderEventEnum event) throws IOException {
-        state.handleEvent(this, event, productService, outputBundle);
+        state.handleEvent(this, event);
     }
 }

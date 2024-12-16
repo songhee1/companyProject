@@ -13,14 +13,14 @@ import org.dto.OrderProductDTO;
 import org.service.ProductService;
 
 public class OutputBundle {
-    private static OutputBundle outputBundle;
     private OutputBundle(){}
-    public static OutputBundle getOutputBundle(){
-        if(Objects.isNull(outputBundle)){
-            outputBundle = new OutputBundle();
-        }
+    private static class OutputBundleHelper{
+        private static OutputBundle outputBundle = new OutputBundle();
 
-        return outputBundle;
+    }
+    public static OutputBundle getOutputBundle(){
+
+        return OutputBundleHelper.outputBundle;
     }
     private static final String LONG_DASHI = "----------------------------------\n";
     private static final String SHORT_DASHI = " - ";

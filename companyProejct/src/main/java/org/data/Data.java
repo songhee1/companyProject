@@ -10,7 +10,6 @@ import org.domain.Product;
 public class Data {
     // 싱글톤으로 변경-생성이 아예안되게 바꾸는게 좋을것같다.
     // Hash에 상품은 고정되어있음. Immutable(구글 라이브러리 guava) 개선의여지 있음
-//    private static Map<Integer, Integer> amountOfItems;
     private Data(){
     }
 
