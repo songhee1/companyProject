@@ -1,4 +1,6 @@
-package org.domain;
+package org.state;
+
+import org.domain.fsm.OrderEventEnum;
 
 public class OrderContext {
     private State state;
@@ -9,7 +11,7 @@ public class OrderContext {
     public void setState(State state) {
         this.state = state;
     }
-    public void handleEvent(OrderEvent event){
+    public void handleEvent(OrderEventEnum event){
         state.handleEvent(this, event);
     }
 }

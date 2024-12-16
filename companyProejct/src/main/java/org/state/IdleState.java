@@ -1,15 +1,17 @@
-package org.domain;
+package org.state;
+
+import org.domain.fsm.OrderEventEnum;
 
 public class IdleState implements State{
 
     @Override
-    public void handleEvent(OrderContext context, OrderEvent event) {
+    public void handleEvent(OrderContext context, OrderEventEnum event) {
         switch (event){
-            case ORDER:
+            case OrderStartedEvent:
                 context.setState(new OrderState());
-                System.out.println("orderstate 진입");
+                System.out.println("order state 진입");
                 break;
-            case QUIT:
+            case QuitEvent:
                 context.setState(new QuitState());
                 System.out.println("quitstate 진입");
                 break;

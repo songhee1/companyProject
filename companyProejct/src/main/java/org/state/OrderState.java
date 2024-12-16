@@ -1,12 +1,14 @@
-package org.domain;
+package org.state;
+
+import org.domain.fsm.OrderEventEnum;
 
 public class OrderState implements State{
 
     @Override
-    public void handleEvent(OrderContext context, OrderEvent event) {
+    public void handleEvent(OrderContext context, OrderEventEnum event) {
         switch (event){
-            case SELECT_PRODUCT:
-                context.setState(new ActiveProduct());
+            case SelectProductEvent:
+                context.setState(new ActiveProductState());
                 System.out.println("activeProduct state 진입");
                 break;
             default:

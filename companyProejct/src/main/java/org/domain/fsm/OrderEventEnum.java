@@ -1,6 +1,6 @@
-package org.domain;
+package org.domain.fsm;
 
-public enum OrderEvent {
+public enum OrderEventEnum {
     OrderStartedEvent,
     QuitEvent,
     SelectProductEvent,
@@ -9,5 +9,6 @@ public enum OrderEvent {
     OrderRejectedEvent,
     ReceiptsIssuedEvent,
     OrderEndEvent,
-    OrderInitializedEvent
+    OrderInitializedEvent,
+    StateInitializedEvent
 }
