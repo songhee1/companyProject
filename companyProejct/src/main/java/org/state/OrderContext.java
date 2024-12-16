@@ -1,17 +1,41 @@
 package org.state;
 
+import java.io.IOException;
+import org.domain.ShoppingBasket;
 import org.domain.fsm.OrderEventEnum;
+import org.outputSystem.OutputBundle;
+import org.service.ProductService;
+import org.service.ProductServiceImpl;
 
 public class OrderContext {
+    private final OutputBundle outputBundle = OutputBundle.getOutputBundle();
+    private final ProductService productService = new ProductServiceImpl();
     private State state;
+    private String command;
+    private ShoppingBasket basket;
     public OrderContext(){
         state = new IdleState();
     }
-
     public void setState(State state) {
         this.state = state;
     }
-    public void handleEvent(OrderEventEnum event){
-        state.handleEvent(this, event);
+    public void setCommand(String command) {
+        this.command = command;
+    }
+
+    public void setBasket(ShoppingBasket basket) {
+        this.basket = basket;
+    }
+
+    public ShoppingBasket getBasket() {
+        return basket;
+    }
+
+    public String getCommand() {
+        return command;
+    }
+
+    public void handleEvent(OrderEventEnum event) throws IOException {
+        state.handleEvent(this, event, productService, outputBundle);
     }
 }

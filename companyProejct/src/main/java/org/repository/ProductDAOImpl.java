@@ -2,7 +2,6 @@ package org.repository;
 
 import com.google.common.collect.ImmutableMap;
 import java.io.IOException;
-import java.util.Map;
 import org.data.Data;
 import org.domain.Product;
 

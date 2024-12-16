@@ -3,6 +3,7 @@ package org.domain;
 public enum OrderEnum {
     ORDER_START("입력(o[order]: 주문, q[quit]: 종료) : "),
     ORDER("o"),
+    QUIT("q"),
     ORDER_END("고객님의 주문 감사합니다."),
     ORDER_NUMBER_OF_PRODUCT("상품번호 : "),
     ORDER_HISTORY_OF_ORDER("주문 내역:\n"),

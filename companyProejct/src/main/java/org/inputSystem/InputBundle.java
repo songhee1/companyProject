@@ -6,25 +6,16 @@ import java.io.InputStreamReader;
 import org.domain.OrderEnum;
 import org.exception.UserException;
 import org.service.ProductService;
+import org.state.IdleState;
 import org.validation.ValidateLogic;
 
 public class InputBundle {
     public InputBundle(){}
-    //Scanner가 더 좋다!
+    //Scanner가 더 좋다! 궁금한점:그런데 장점이 더 많은건 BufferedReader 아닌가요??
     private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     public String orderOrQuitCommand() throws IOException {
         //넘어가기
-        String userInputOrderOrQuitCommand = null;
-        while(true){
-            System.out.print(OrderEnum.ORDER_START.getOrderData());
-            userInputOrderOrQuitCommand = br.readLine();
-            try{
-                ValidateLogic.validateOrderOrQuitCommand(userInputOrderOrQuitCommand);
-                break;
-            }catch(UserException exception){
-                System.out.println(exception.getMessage());
-            }
-        }
+        String userInputOrderOrQuitCommand = IdleState.getString(br);
 
         return userInputOrderOrQuitCommand;
     }
