@@ -11,20 +11,27 @@ public class Data {
     // 싱글톤으로 변경-생성이 아예안되게 바꾸는게 좋을것같다.
     // Hash에 상품은 고정되어있음. Immutable(구글 라이브러리 guava) 개선의여지 있음
 //    private static Map<Integer, Integer> amountOfItems;
-    private static ImmutableMap<Integer, Product> items;
     private Data(){
     }
 
-    public static ImmutableMap<Integer, Product> getItems() throws IOException {
-        if(Objects.isNull(items)){
-            items = setItems();
-            setAmountOfItems();
+    private static class DataSingletonHelper{
+        private static final ImmutableMap<Integer, Product> ITEMS;
+
+        static {
+            try {
+                ITEMS = setItems();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
-        return items;
+    }
+
+    public static ImmutableMap<Integer, Product> getItems(){
+        return DataSingletonHelper.ITEMS;
     }
 
     private static ImmutableMap<Integer, Product> setItems() throws IOException {
-        return ImmutableMap.<Integer, Product>builder()
+        ImmutableMap<Integer, Product> items =  ImmutableMap.<Integer, Product>builder()
             .put(768848, new Product("[STANLEY] GO CERAMIVAC 진공 텀블러/보틀 3종",21000))
             .put(748943, new Product("디오디너리 데일리 세트 (Daily set)",19000))
             .put(779989, new Product("버드와이저 HOME DJing 굿즈 세트",35000))
@@ -45,9 +52,12 @@ public class Data {
             .put(778422, new Product("캠핑덕 우드롤테이블",45000))
             .put(648418, new Product("BS 02-2A DAYPACK 26 (BLACK)",238000))
             .build();
+
+        setAmountOfItems(items);
+        return items;
     }
 
-    private static void setAmountOfItems() {
+    private static void setAmountOfItems(ImmutableMap<Integer, Product> items) {
         Objects.requireNonNull(items.get(768848)).setStockAmount(45);
         Objects.requireNonNull(items.get(748943)).setStockAmount(89);
         Objects.requireNonNull(items.get(779989)).setStockAmount(43);
