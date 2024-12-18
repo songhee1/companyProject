@@ -2,122 +2,68 @@ package org.program;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.Buffer;
-import org.domain.OrderEnum;
-import org.domain.ShoppingBasket;
 import org.domain.fsm.OrderEventEnum;
-import org.exception.UserException;
 import org.inputSystem.InputBundle;
 import org.outputSystem.OutputBundle;
 import org.service.ProductService;
 import org.state.OrderContext;
-import org.validation.ValidateLogic;
+import org.view.EndView;
+import org.view.ProductView;
 import org.view.StartView;
 
 public class OrderProgram {
     private final BufferedReader br;
     private final OutputBundle outputBundle;
     private final StartView startView;
+    private final EndView endView;
+    private final ProductView productView;
     private final InputBundle inputBundle;
     private final ProductService productService;
     private final OrderContext orderContext;
 
-    public OrderProgram(BufferedReader br, OutputBundle outputBundle, StartView startView, InputBundle inputBundle,
-        ProductService productService, OrderContext orderorderContext) {
+    public OrderProgram(BufferedReader br, OutputBundle outputBundle, StartView startView, EndView endView,
+        ProductView productView, InputBundle inputBundle, ProductService productService, OrderContext orderorderContext) {
         this.br = br;
         this.outputBundle = outputBundle;
         this.startView = startView;
+        this.endView = endView;
+        this.productView = productView;
         this.inputBundle = inputBundle;
         this.productService = productService;
         this.orderContext = orderorderContext;
     }
 
     public void programStart_new() throws IOException {
-        while (play()) {
-            orderContext.handleEvent(OrderEventEnum.OrderStartedEvent);
+        while (play()) { // 주문일때만 들어감
+            // 주문 시작
+            orderContext.handleEvent(OrderEventEnum.OrderStartedEvent, br, productService);
+            productView.displayProductList(productService);
+            selectProduct();
         }
+        orderContext.handleEvent(OrderEventEnum.QuitEvent, br, productService);
+        endView.displayEnd();
     }
 
-    public boolean play() throws IOException {
-        startView.displayStartMessage();
-        orderContext.handleEvent(OrderEventEnum.InitialWaitingEvent);
+    private void selectProduct() throws IOException {
+        do{
+            // 상품 선택
+            orderContext.handleEvent(OrderEventEnum.SelectProductEvent, br, productService);
+            if(orderContext.getCommand()) return;
+        }while(order());
+        orderContext.handleEvent(OrderEventEnum.ReceiptsIssuedEvent, br, productService);
+    }
+
+    public boolean order() {
         return orderContext.getCommand();
     }
 
-    public void temp() throws IOException {
-
-        /** 입력값 : o ➡️ OrderStartedEvent 발생
-         *  입력값 : q ➡️ QuitEvent 발생
-         *  ✅ orderContext.handleEvent(OrderEventEnum.<선택한 이벤트명>);
-         */
-
-
-        /*if(command.equals(OrderEnum.ORDER.getOrderData())){
-            orderContext.handleEvent(OrderEventEnum.OrderStartedEvent);
-            orderContext.handleEvent(OrderEventEnum.SelectProductEvent);
-            int productId = orderWithProductId();
-            if(productId == 0){
-//                break;
-            }
-            int productAmount = orderWithProductAmount();
-            try{
-                productService.orderProduct(productId, productAmount);
-                productService.addProductToBasket(productId, productAmount, orderContext.getBasket());
-            }catch(UserException exception){
-                System.out.println(exception.getMessage());
-//                isReset = true;
-//                break;
-            }
-
-        }else if(command.equals(OrderEnum.QUIT.getOrderData())){
-            orderContext.handleEvent(OrderEventEnum.QuitEvent);
-            orderContext.handleEvent(OrderEventEnum.OrderEndEvent);
-        }*/
-    }
-    public void programStart() throws IOException {
-        boolean isReset = false;
-        while(inputBundle.orderOrQuitCommand().equals(OrderEnum.ORDER.getOrderData())){
-            // 로직, 아키텍쳐적으로 bad..
-            // SOLID 대충 그런 의미..지켜주면 좋다 --OCP에 취약하다, 수정이 쉽고 변경은 최소화필요
-            // 핵심 : SHELL 작업 + 재고처리 후 동시성 thread safe..fsm
-            outputBundle.printProductList(productService);
-            ShoppingBasket basket = new ShoppingBasket();
-            isReset = shoppingResetController(isReset, basket);
-            if(isReset){
-                isReset = false;
-                continue;
-            }
-            CalculateProgram.calculatePaymentAmount(basket);
-            outputBundle.printReceipt(basket);
-        }
-        outputBundle.printEnd();
+    public boolean play() throws IOException {
+        // 주문 / 종료 뭐하실?
+        startView.displayStartMessage();
+        // 주문/종료 결정
+        orderContext.handleEvent(OrderEventEnum.InitialWaitingEvent, br, productService);
+        return orderContext.getCommand();
     }
 
-    private boolean shoppingResetController(boolean isReset, ShoppingBasket basket) throws IOException {
-        for(;;){
-            int productId = orderWithProductId();
-            if(productId == 0){
-                break;
-            }
-            int productAmount = orderWithProductAmount();
-            try{
-                productService.orderProduct(productId, productAmount);
-                productService.addProductToBasket(productId, productAmount, basket);
-            }catch(UserException exception){
-                System.out.println(exception.getMessage());
-                isReset = true;
-                break;
-            }
-        }
-        return isReset;
-    }
 
-    private int orderWithProductId() throws IOException {
-        outputBundle.printToOrderProduct();
-        return inputBundle.orderWithProductId(productService);
-    }
-    private int orderWithProductAmount() throws IOException {
-        outputBundle.printToOrderProductAmount();
-        return inputBundle.orderWithProductAmount();
-    }
 }

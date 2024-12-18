@@ -13,16 +13,10 @@ import org.validation.ValidateLogic;
 public class ProductServiceImpl implements ProductService{
     private final ProductDAO productDAO = new ProductDAOImpl();
     @Override
-    public void orderProduct(int productId, int productAmount) throws UserException, IOException {
+    public void orderProduct(int productId, int productAmount, ShoppingBasket basket) throws UserException, IOException {
         ValidateLogic.validateOrderAmount(productId, productAmount, productDAO);
         Product product = productDAO.getProduct(productId);
         product.reduceStockAmount(productAmount);
-
-    }
-    @Override
-    public void addProductToBasket(int productId, int productAmount, ShoppingBasket basket)
-        throws IOException {
-        Product product = productDAO.getProduct(productId);
         basket.addProduct(new OrderProductDTO(product.getName(), productAmount, productAmount*product.getPrice()));
     }
 

@@ -25,9 +25,6 @@ public class OutputBundle {
     private static final String LONG_DASHI = "----------------------------------\n";
     private static final String SHORT_DASHI = " - ";
 
-    public void printEnd(){
-        System.out.println(OrderEnum.ORDER_END.getOrderData());
-    }
     public void printToOrderProduct(){
         System.out.print(OrderEnum.ORDER_NUMBER_OF_PRODUCT.getOrderData());
     }
@@ -51,16 +48,4 @@ public class OutputBundle {
         System.out.println(sb);
     }
 
-    public void printProductList(ProductService productService) throws IOException {
-        ImmutableMap<Integer, Product> items = productService.getAllProductEntries();
-        StringBuilder sb = new StringBuilder();
-        sb.append("상품번호\t\t\t상품명\t\t\t판매가격\t\t\t재고수\n");
-
-        for (Map.Entry<Integer, Product> entry : items.entrySet()) {
-            Product product = entry.getValue();
-            sb.append(entry.getKey()).append("\t").append(product.getName()).append("\t")
-                .append(product.getPrice()).append("\t").append(product.getStockAmount()).append("\n");
-        }
-        System.out.println(sb);
-    }
 }

@@ -8,11 +8,10 @@ import java.util.Objects;
 import org.domain.Product;
 
 public class Data {
-    // 싱글톤으로 변경-생성이 아예안되게 바꾸는게 좋을것같다.
-    // Hash에 상품은 고정되어있음. Immutable(구글 라이브러리 guava) 개선의여지 있음
     private Data(){
     }
 
+    // 상품 싱글톤으로 지정
     private static class DataSingletonHelper{
         private static final ImmutableMap<Integer, Product> ITEMS;
 
@@ -52,6 +51,7 @@ public class Data {
             .put(648418, new Product("BS 02-2A DAYPACK 26 (BLACK)",238000))
             .build();
 
+        // 수량 지정
         setAmountOfItems(items);
         return items;
     }

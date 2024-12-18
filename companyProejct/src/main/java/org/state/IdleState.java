@@ -3,26 +3,23 @@ package org.state;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Objects;
 import org.domain.OrderEnum;
 import org.domain.fsm.OrderEventEnum;
 import org.exception.UserException;
-import org.outputSystem.OutputBundle;
 import org.service.ProductService;
 import org.validation.ValidateLogic;
-import org.view.StartView;
 
 public class IdleState implements State{
     private String userInputOrderOrQuitCommand = null;
     @Override
-    public void handleEvent(OrderContext context, OrderEventEnum event) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    public void handleEvent(OrderContext context, OrderEventEnum event, BufferedReader br, ProductService productService) throws IOException {
         switch(event){
             case InitialWaitingEvent:
                 context.setState(new WaitingState());
                 System.out.println("waiting state 진입");
 
-                getString(br);
+                //주문/종료 입력
+                getUserInputOrderOrQuitCommand(br);
                 context.setCommand(checkUserInputOrderOrQuit(userInputOrderOrQuitCommand));
 
                 break;
@@ -31,7 +28,7 @@ public class IdleState implements State{
                 break;
         }
     }
-    public void getString(BufferedReader br) throws IOException {
+    public void getUserInputOrderOrQuitCommand(BufferedReader br) throws IOException {
         while(readRightUserInput(br)){
 
         }
@@ -40,11 +37,11 @@ public class IdleState implements State{
         userInputOrderOrQuitCommand = br.readLine();
         try{
             ValidateLogic.validateOrderOrQuitCommand(userInputOrderOrQuitCommand);
-            return true;
+            return false;
         }catch(UserException exception){
             System.out.println(exception.getMessage());
         }
-        return false;
+        return true;
     }
 
     public boolean checkUserInputOrderOrQuit(String input){

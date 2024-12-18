@@ -9,13 +9,11 @@ import org.service.ProductServiceImpl;
 public class WaitingState implements State{
 
     @Override
-    public void handleEvent(OrderContext context, OrderEventEnum event, ProductService productService, OutputBundle outputBundle) throws IOException {
+    public void handleEvent(OrderContext context, OrderEventEnum event) throws IOException {
         switch (event){
             case OrderStartedEvent:
                 context.setState(new OrderState());
                 System.out.println("order state 진입");
-
-                outputBundle.printProductList(productService);
 
                 break;
             case QuitEvent:

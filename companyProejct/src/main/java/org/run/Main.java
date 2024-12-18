@@ -9,6 +9,8 @@ import org.outputSystem.OutputBundle;
 import org.program.OrderProgram;
 import org.service.ProductServiceImpl;
 import org.state.OrderContext;
+import org.view.EndView;
+import org.view.ProductView;
 import org.view.StartView;
 
 public class Main {
@@ -19,6 +21,8 @@ public class Main {
         new BufferedReader(new InputStreamReader(System.in)),
         OutputBundle.getOutputBundle(),
         new StartView(),
+        new EndView(),
+        new ProductView(),
         new InputBundle(),
         new ProductServiceImpl(),
         new OrderContext()
