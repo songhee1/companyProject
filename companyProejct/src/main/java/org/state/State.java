@@ -6,7 +6,5 @@ import org.outputSystem.OutputBundle;
 import org.service.ProductService;
 
 public interface State {
-    void handleEvent(OrderContext context, OrderEventEnum event, ProductService productService, OutputBundle outputBundle) throws IOException;
-
-    void handleEvent(OrderContext orderContext, OrderEventEnum event);
+    void handleEvent(OrderContext orderContext, OrderEventEnum event) throws IOException;
 }

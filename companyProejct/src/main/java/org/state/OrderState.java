@@ -8,7 +8,7 @@ import org.service.ProductService;
 public class OrderState implements State{
 
     @Override
-    public void handleEvent(OrderContext context, OrderEventEnum event, ProductService productService, OutputBundle outputBundle) {
+    public void handleEvent(OrderContext context, OrderEventEnum event) {
         switch (event){
             case SelectProductEvent:
                 context.setState(new ActiveProductState());

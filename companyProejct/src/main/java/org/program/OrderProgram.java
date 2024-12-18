@@ -1,6 +1,8 @@
 package org.program;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.Buffer;
 import org.domain.OrderEnum;
 import org.domain.ShoppingBasket;
 import org.domain.fsm.OrderEventEnum;
@@ -9,30 +11,48 @@ import org.inputSystem.InputBundle;
 import org.outputSystem.OutputBundle;
 import org.service.ProductService;
 import org.state.OrderContext;
+import org.validation.ValidateLogic;
+import org.view.StartView;
 
 public class OrderProgram {
+    private final BufferedReader br;
     private final OutputBundle outputBundle;
+    private final StartView startView;
     private final InputBundle inputBundle;
     private final ProductService productService;
     private final OrderContext orderContext;
 
-    public OrderProgram(OutputBundle outputBundle, InputBundle inputBundle,
+    public OrderProgram(BufferedReader br, OutputBundle outputBundle, StartView startView, InputBundle inputBundle,
         ProductService productService, OrderContext orderorderContext) {
+        this.br = br;
         this.outputBundle = outputBundle;
+        this.startView = startView;
         this.inputBundle = inputBundle;
         this.productService = productService;
         this.orderContext = orderorderContext;
     }
 
     public void programStart_new() throws IOException {
+        while (play()) {
+            orderContext.handleEvent(OrderEventEnum.OrderStartedEvent);
+        }
+    }
+
+    public boolean play() throws IOException {
+        startView.displayStartMessage();
         orderContext.handleEvent(OrderEventEnum.InitialWaitingEvent);
+        return orderContext.getCommand();
+    }
+
+    public void temp() throws IOException {
+
         /** 입력값 : o ➡️ OrderStartedEvent 발생
          *  입력값 : q ➡️ QuitEvent 발생
          *  ✅ orderContext.handleEvent(OrderEventEnum.<선택한 이벤트명>);
          */
 
-        String command = orderContext.getCommand();
-        if(command.equals(OrderEnum.ORDER.getOrderData())){
+
+        /*if(command.equals(OrderEnum.ORDER.getOrderData())){
             orderContext.handleEvent(OrderEventEnum.OrderStartedEvent);
             orderContext.handleEvent(OrderEventEnum.SelectProductEvent);
             int productId = orderWithProductId();
@@ -52,7 +72,7 @@ public class OrderProgram {
         }else if(command.equals(OrderEnum.QUIT.getOrderData())){
             orderContext.handleEvent(OrderEventEnum.QuitEvent);
             orderContext.handleEvent(OrderEventEnum.OrderEndEvent);
-        }
+        }*/
     }
     public void programStart() throws IOException {
         boolean isReset = false;

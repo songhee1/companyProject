@@ -9,7 +9,7 @@ import org.service.ProductServiceImpl;
 
 public class OrderContext {
     private State state;
-    private String command;
+    private boolean command;
     private ShoppingBasket basket;
     public OrderContext(){
         state = new IdleState();
@@ -17,7 +17,7 @@ public class OrderContext {
     public void setState(State state) {
         this.state = state;
     }
-    public void setCommand(String command) {
+    public void setCommand(boolean command) {
         this.command = command;
     }
 
@@ -29,7 +29,7 @@ public class OrderContext {
         return basket;
     }
 
-    public String getCommand() {
+    public boolean getCommand() {
         return command;
     }
 

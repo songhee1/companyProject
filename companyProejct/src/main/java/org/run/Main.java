@@ -1,32 +1,30 @@
 package org.run;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import org.data.Data;
-import org.domain.OrderEnum;
-import org.domain.ShoppingBasket;
-import org.domain.fsm.OrderEventEnum;
-import org.exception.UserException;
 import org.inputSystem.InputBundle;
 import org.outputSystem.OutputBundle;
 import org.program.OrderProgram;
-import org.service.ProductService;
 import org.service.ProductServiceImpl;
 import org.state.OrderContext;
-import org.state.OrderState;
-import org.validation.ValidateLogic;
+import org.view.StartView;
 
 public class Main {
     public static void main(String[] args) throws IOException{
 
         Data.getItems();
         OrderProgram orderProgram = new OrderProgram(
+        new BufferedReader(new InputStreamReader(System.in)),
         OutputBundle.getOutputBundle(),
+        new StartView(),
         new InputBundle(),
         new ProductServiceImpl(),
         new OrderContext()
         );
 
-
+        orderProgram.programStart_new();
         /**
         * 예전에 작성한 방식
          * OrderProgram orderProgramController = new OrderProgram();
@@ -34,7 +32,7 @@ public class Main {
         * */
     }
 
-    public int orderWithProductId(ProductService productService) throws IOException {
+    /*public int orderWithProductId(ProductService productService) throws IOException {
         String userInputProductId = null;
         while(true){
             userInputProductId = br.readLine();
@@ -50,5 +48,5 @@ public class Main {
             }
         }
         return Integer.parseInt(userInputProductId);
-    }
+    }*/
 }

@@ -10,37 +10,44 @@ import org.exception.UserException;
 import org.outputSystem.OutputBundle;
 import org.service.ProductService;
 import org.validation.ValidateLogic;
+import org.view.StartView;
 
 public class IdleState implements State{
+    private String userInputOrderOrQuitCommand = null;
     @Override
-    public void handleEvent(OrderContext context, OrderEventEnum event, ProductService productService, OutputBundle outputBundle) throws IOException {
+    public void handleEvent(OrderContext context, OrderEventEnum event) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
         switch(event){
             case InitialWaitingEvent:
                 context.setState(new WaitingState());
                 System.out.println("waiting state 진입");
 
-                String userInputOrderOrQuitCommand = getString(br);
-                context.setCommand(userInputOrderOrQuitCommand);
+                getString(br);
+                context.setCommand(checkUserInputOrderOrQuit(userInputOrderOrQuitCommand));
+
                 break;
             default:
                 System.out.println("invalid event for idle state");
                 break;
         }
     }
-    public static String getString(BufferedReader br) throws IOException {
-        String userInputOrderOrQuitCommand;
-        while(true){
-            System.out.print(OrderEnum.ORDER_START.getOrderData());
-            userInputOrderOrQuitCommand = br.readLine();
-            try{
-                ValidateLogic.validateOrderOrQuitCommand(userInputOrderOrQuitCommand);
-                break;
-            }catch(UserException exception){
-                System.out.println(exception.getMessage());
-            }
+    public void getString(BufferedReader br) throws IOException {
+        while(readRightUserInput(br)){
+
         }
-        return userInputOrderOrQuitCommand;
+    }
+    public boolean readRightUserInput(BufferedReader br) throws IOException {
+        userInputOrderOrQuitCommand = br.readLine();
+        try{
+            ValidateLogic.validateOrderOrQuitCommand(userInputOrderOrQuitCommand);
+            return true;
+        }catch(UserException exception){
+            System.out.println(exception.getMessage());
+        }
+        return false;
+    }
+
+    public boolean checkUserInputOrderOrQuit(String input){
+        return input.equals(OrderEnum.ORDER.getOrderData());
     }
 }

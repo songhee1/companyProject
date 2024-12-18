@@ -13,12 +13,12 @@ public class InputBundle {
     public InputBundle(){}
     //Scanner가 더 좋다! 궁금한점:그런데 장점이 더 많은건 BufferedReader 아닌가요??
     private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    public String orderOrQuitCommand() throws IOException {
-        //넘어가기
-        String userInputOrderOrQuitCommand = IdleState.getString(br);
-
-        return userInputOrderOrQuitCommand;
-    }
+//    public String orderOrQuitCommand() throws IOException {
+//        //넘어가기
+//        String userInputOrderOrQuitCommand = IdleState.getString(br);
+//
+//        return userInputOrderOrQuitCommand;
+//    }
     public int orderWithProductId(ProductService productService) throws IOException {
         String userInputProductId = null;
         while(true){
