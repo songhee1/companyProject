@@ -75,6 +75,7 @@ public class OrderState implements State{
     private boolean readRightUserInputAmount(BufferedReader br, OrderView orderView) throws IOException {
         orderView.displayToOrderProductAmount();
         userInputProductAmount = br.readLine();
+
         try{
             ValidateLogic.validateIsNumber(userInputProductAmount);
             return false;

@@ -15,8 +15,8 @@ public class BlockedState implements State{
         ProductService productService, OrderView orderView, ReceiptView receiptView,
         StartView startView, EndView endView) {
         switch (event){
-            case OrderInitializedEvent:
-                context.setState(new OrderState());
+            case StateInitializedEvent:
+                context.setState(new IdleState());
                 System.out.println("order state 진입");
                 break;
             default:

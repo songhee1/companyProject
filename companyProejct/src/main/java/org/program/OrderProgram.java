@@ -52,7 +52,10 @@ public class OrderProgram {
         do{
             // 상품 선택
             orderContext.handleEvent(OrderEventEnum.SelectProductEvent, br, productService, orderView, receiptView, startView, endView);
-            if(orderContext.getState().getClass().equals(BlockedState.class)) return;
+            if(orderContext.getState().getClass().equals(BlockedState.class)) {
+                orderContext.handleEvent(OrderEventEnum.StateInitializedEvent, br, productService, orderView, receiptView, startView, endView);
+                return;
+            }
 
         }while(!order());
         System.out.println("영수증 출력");

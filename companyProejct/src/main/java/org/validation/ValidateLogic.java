@@ -36,6 +36,9 @@ public class ValidateLogic {
     }
 
     public static void validateIsNumber(String input) throws UserException {
+        if(input.isEmpty()){
+            throw new UserException(EXCEPTION_USE_NUMBER);
+        }
         for(int i=0;i<input.length();i++){
             if(!Character.isDigit(input.charAt(i))){
                 throw new UserException(EXCEPTION_USE_NUMBER);
