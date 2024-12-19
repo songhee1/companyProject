@@ -4,11 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import org.domain.ShoppingBasket;
 import org.domain.fsm.OrderEventEnum;
-import org.dto.OrderProductDTO;
-import org.dto.PreOrderProductDTO;
 import org.service.ProductService;
+import org.view.EndView;
 import org.view.OrderView;
 import org.view.ReceiptView;
+import org.view.StartView;
 
 public class OrderContext {
     private State state;
@@ -35,8 +35,12 @@ public class OrderContext {
         return command;
     }
 
+    public State getState() {
+        return state;
+    }
+
     public void handleEvent(OrderEventEnum event, BufferedReader br, ProductService productService,
-        OrderView orderView, ReceiptView receiptView) throws IOException {
-        state.handleEvent(this, event, br, productService, orderView, receiptView);
+        OrderView orderView, ReceiptView receiptView, StartView startView, EndView endView) throws IOException {
+        state.handleEvent(this, event, br, productService, orderView, receiptView, startView, endView);
     }
 }

@@ -4,9 +4,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import org.domain.ShoppingBasket;
 import org.domain.fsm.OrderEventEnum;
-import org.inputSystem.InputBundle;
 import org.service.ProductService;
+import org.state.BlockedState;
 import org.state.OrderContext;
+import org.state.OrderState;
 import org.view.EndView;
 import org.view.OrderView;
 import org.view.ProductView;
@@ -28,10 +29,10 @@ public class OrderProgram {
         ProductService productService, OrderContext orderorderContext) {
         this.br = br;
         this.startView = startView;
-        this.endView = endView;
         this.productView = productView;
         this.orderView = orderView;
         this.receiptView = receiptView;
+        this.endView = endView;
         this.productService = productService;
         this.orderContext = orderorderContext;
     }
@@ -39,21 +40,22 @@ public class OrderProgram {
     public void programStart_new() throws IOException {
         while (play()) { // 주문일때만 들어감
             // 주문 시작
-            orderContext.handleEvent(OrderEventEnum.OrderStartedEvent, br, productService, orderView, receiptView);
+            orderContext.handleEvent(OrderEventEnum.OrderStartedEvent, br, productService, orderView, receiptView, startView, endView);
             productView.displayProductList(productService);
             selectProduct();
         }
-        orderContext.handleEvent(OrderEventEnum.QuitEvent, br, productService, orderView, receiptView);
-        endView.displayEnd();
+        orderContext.handleEvent(OrderEventEnum.QuitEvent, br, productService, orderView, receiptView, startView, endView);
     }
 
     private void selectProduct() throws IOException {
         orderContext.setBasket(new ShoppingBasket());
         do{
             // 상품 선택
-            orderContext.handleEvent(OrderEventEnum.SelectProductEvent, br, productService, orderView, receiptView);
+            orderContext.handleEvent(OrderEventEnum.SelectProductEvent, br, productService, orderView, receiptView, startView, endView);
+            if(orderContext.getState().getClass().equals(BlockedState.class)) return;
+
         }while(!order());
-        orderContext.handleEvent(OrderEventEnum.ReceiptsIssuedEvent, br, productService, orderView, receiptView);
+        orderContext.handleEvent(OrderEventEnum.ReceiptsIssuedEvent, br, productService, orderView, receiptView, startView, endView);
     }
 
     public boolean order() {
@@ -61,10 +63,7 @@ public class OrderProgram {
     }
 
     public boolean play() throws IOException {
-        // 주문 / 종료 뭐하실?
-        startView.displayStartMessage();
-        // 주문/종료 결정
-        orderContext.handleEvent(OrderEventEnum.InitialWaitingEvent, br, productService, orderView, receiptView);
+        orderContext.handleEvent(OrderEventEnum.InitialWaitingEvent, br, productService, orderView, receiptView, startView, endView);
         return !orderContext.getCommand();
     }
 
