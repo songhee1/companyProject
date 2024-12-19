@@ -20,13 +20,14 @@ public class OrderState implements State{
         throws IOException {
         switch (event){
             case SelectProductEvent:
-                context.setState(new ActiveState());
-                System.out.println("activeProduct state 진입");
 
                 // 상품번호 입력
                 getOrderWithProductId(br, productService, orderView);
                 if(userInputProductId.isEmpty()){
                     context.setCommand(true);
+                    System.out.println("탈출함");
+                    context.setState(new ActiveState());
+                    System.out.println("active state 진입");
                     break;
                 }
                 getOrderWithProductAmount(br, orderView);

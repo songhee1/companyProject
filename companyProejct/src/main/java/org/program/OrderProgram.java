@@ -55,6 +55,7 @@ public class OrderProgram {
             if(orderContext.getState().getClass().equals(BlockedState.class)) return;
 
         }while(!order());
+        System.out.println("영수증 출력");
         orderContext.handleEvent(OrderEventEnum.ReceiptsIssuedEvent, br, productService, orderView, receiptView, startView, endView);
     }
 

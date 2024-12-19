@@ -17,17 +17,13 @@ public class ActiveState implements State {
         throws IOException {
 
         switch (event) {
-            case ShortOfGoodsInStockEvent:
-                context.setState(new BlockedState());
-                System.out.println("active amount state 진입");
-                break;
 
             case ReceiptsIssuedEvent:
-                context.setState(new CompletedState());
-                System.out.println("completed state 진입");
-
                 CalculateProgram.calculatePaymentAmount(context.getBasket());
                 receiptView.displayReceipt(context.getBasket());
+
+                context.setState(new CompletedState());
+                System.out.println("completed state 진입");
                 break;
 
             case SelectProductEvent:
