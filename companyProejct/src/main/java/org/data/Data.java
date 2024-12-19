@@ -10,22 +10,16 @@ import org.domain.Product;
 public class Data {
     private Data(){
     }
+    private static volatile ImmutableMap<Integer, Product> items = null;
+    public static ImmutableMap<Integer, Product> getItems() throws IOException {
 
-    // 상품 싱글톤으로 지정
-    private static class DataSingletonHelper{
-        private static final ImmutableMap<Integer, Product> ITEMS;
-
-        static {
-            try {
-                ITEMS = setItems();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+        if(items == null){
+            synchronized (Data.class){
+                items = setItems();
             }
-        }
-    }
+         }
+        return items;
 
-    public static ImmutableMap<Integer, Product> getItems(){
-        return DataSingletonHelper.ITEMS;
     }
 
     private static ImmutableMap<Integer, Product> setItems() throws IOException {
