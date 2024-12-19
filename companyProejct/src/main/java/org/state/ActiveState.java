@@ -3,12 +3,14 @@ package org.state;
 import java.io.BufferedReader;
 import java.io.IOException;
 import org.domain.fsm.OrderEventEnum;
-import org.dto.PreOrderProductDTO;
 import org.service.ProductService;
+import org.view.OrderView;
+import org.view.ReceiptView;
 
 public class ActiveState implements State {
     @Override
-    public void handleEvent(OrderContext context, OrderEventEnum event, BufferedReader br, ProductService productService)
+    public void handleEvent(OrderContext context, OrderEventEnum event, BufferedReader br, ProductService productService,
+        OrderView orderView, ReceiptView receiptView)
         throws IOException {
 
         switch (event) {
@@ -22,7 +24,10 @@ public class ActiveState implements State {
                 break;
             case ReceiptsIssuedEvent:
                 context.setState(new CompletedState());
-                System.out.println("completed state 지입");
+                System.out.println("completed state 진입");
+
+                receiptView.displayReceipt(context.getBasket());
+
             default:
                 System.out.println("invalid event for idle state");
         }

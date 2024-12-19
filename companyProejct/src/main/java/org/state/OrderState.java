@@ -10,26 +10,27 @@ import org.dto.PreOrderProductDTO;
 import org.exception.UserException;
 import org.service.ProductService;
 import org.validation.ValidateLogic;
+import org.view.OrderView;
 
 public class OrderState implements State{
     private String userInputProductId;
     private String userInputProductAmount;
     @Override
-    public void handleEvent(OrderContext context, OrderEventEnum event, BufferedReader br, ProductService productService)
+    public void handleEvent(OrderContext context, OrderEventEnum event, BufferedReader br, ProductService productService,
+        OrderView orderView)
         throws IOException {
         switch (event){
             case SelectProductEvent:
                 context.setState(new ActiveState());
                 System.out.println("activeProduct state 진입");
 
-                context.setBasket(new ShoppingBasket());
                 // 상품번호 입력
-                getOrderWithProductId(br, productService);
+                getOrderWithProductId(br, productService, orderView);
                 if(userInputProductId.isEmpty()){
                     context.setCommand(true);
                     break;
                 }
-                getOrderWithProductAmount(br);
+                getOrderWithProductAmount(br, orderView);
                 try {
                     productService.orderProduct(Integer.parseInt(userInputProductId),
                         Integer.parseInt(userInputProductAmount), context.getBasket());
@@ -44,13 +45,14 @@ public class OrderState implements State{
     }
 
     private void getOrderWithProductId(
-        BufferedReader br, ProductService productService) throws IOException {
-        while(readRightUserInput(br, productService)){
+        BufferedReader br, ProductService productService, OrderView orderView) throws IOException {
+        while(readRightUserInput(br, productService, orderView)){
 
         }
     }
 
-    private boolean readRightUserInput(BufferedReader br, ProductService productService) throws IOException {
+    private boolean readRightUserInput(BufferedReader br, ProductService productService, OrderView orderView) throws IOException {
+        orderView.displayToOrderProductId();
         userInputProductId = br.readLine();
         if(userInputProductId.isEmpty()) return false;
 
@@ -63,15 +65,15 @@ public class OrderState implements State{
         }
         return true;
     }
-    private void getOrderWithProductAmount(BufferedReader br) throws IOException {
-        while(readRightUserInputAmount(br)){
+    private void getOrderWithProductAmount(BufferedReader br, OrderView orderView) throws IOException {
+        while(readRightUserInputAmount(br, orderView)){
 
         }
     }
 
-    private boolean readRightUserInputAmount(BufferedReader br) throws IOException {
+    private boolean readRightUserInputAmount(BufferedReader br, OrderView orderView) throws IOException {
+        orderView.displayToOrderProductAmount();
         userInputProductAmount = br.readLine();
-
         try{
             ValidateLogic.validateIsNumber(userInputProductAmount);
             return false;

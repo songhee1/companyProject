@@ -1,15 +1,16 @@
 package org.state;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import org.domain.fsm.OrderEventEnum;
-import org.outputSystem.OutputBundle;
 import org.service.ProductService;
-import org.service.ProductServiceImpl;
+import org.view.OrderView;
 
 public class WaitingState implements State{
 
     @Override
-    public void handleEvent(OrderContext context, OrderEventEnum event) throws IOException {
+    public void handleEvent(OrderContext context, OrderEventEnum event, BufferedReader br, ProductService productService,
+        OrderView orderView) throws IOException {
         switch (event){
             case OrderStartedEvent:
                 context.setState(new OrderState());

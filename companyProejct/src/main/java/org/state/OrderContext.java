@@ -7,6 +7,8 @@ import org.domain.fsm.OrderEventEnum;
 import org.dto.OrderProductDTO;
 import org.dto.PreOrderProductDTO;
 import org.service.ProductService;
+import org.view.OrderView;
+import org.view.ReceiptView;
 
 public class OrderContext {
     private State state;
@@ -33,7 +35,8 @@ public class OrderContext {
         return command;
     }
 
-    public void handleEvent(OrderEventEnum event, BufferedReader br, ProductService productService) throws IOException {
-        state.handleEvent(this, event, br, productService);
+    public void handleEvent(OrderEventEnum event, BufferedReader br, ProductService productService,
+        OrderView orderView, ReceiptView receiptView) throws IOException {
+        state.handleEvent(this, event, br, productService, orderView, receiptView);
     }
 }

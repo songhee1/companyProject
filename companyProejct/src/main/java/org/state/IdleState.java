@@ -8,11 +8,13 @@ import org.domain.fsm.OrderEventEnum;
 import org.exception.UserException;
 import org.service.ProductService;
 import org.validation.ValidateLogic;
+import org.view.OrderView;
 
 public class IdleState implements State{
     private String userInputOrderOrQuitCommand = null;
     @Override
-    public void handleEvent(OrderContext context, OrderEventEnum event, BufferedReader br, ProductService productService) throws IOException {
+    public void handleEvent(OrderContext context, OrderEventEnum event, BufferedReader br, ProductService productService,
+        OrderView orderView) throws IOException {
         switch(event){
             case InitialWaitingEvent:
                 context.setState(new WaitingState());
